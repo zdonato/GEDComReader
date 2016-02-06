@@ -1,0 +1,411 @@
+0 NOTE Zachary Donato
+    Level: 0
+    Tag:   NOTE
+0 HEAD
+    Level: 0
+    Tag:   HEAD
+1 SOUR Family Echo
+    Level: 1
+    Tag:   Invalid tag
+2 WWW http://www.familyecho.com/
+    Level: 2
+    Tag:   Invalid tag
+1 FILE My Family
+    Level: 1
+    Tag:   Invalid tag
+1 DATE 24 JAN 2016
+    Level: 1
+    Tag:   DATE
+1 DEST ANSTFILE
+    Level: 1
+    Tag:   Invalid tag
+1 GEDC
+    Level: 1
+    Tag:   Invalid tag
+2 VERS 5.5.1
+    Level: 2
+    Tag:   Invalid tag
+2 FORM LINEAGE-LINKED
+    Level: 2
+    Tag:   Invalid tag
+1 SUBM @I1@
+    Level: 1
+    Tag:   Invalid tag
+2 NAME John Smith
+    Level: 2
+    Tag:   NAME
+1 SUBN
+    Level: 1
+    Tag:   Invalid tag
+1 CHAR UTF-8
+    Level: 1
+    Tag:   Invalid tag
+0 @I1@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME John /Smith/
+    Level: 1
+    Tag:   NAME
+2 GIVN John
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Smith
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX M
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 3 OCT 1936
+    Level: 2
+    Tag:   DATE
+1 FAMS @F1@
+    Level: 1
+    Tag:   FAMS
+1 FAMC @F2@
+    Level: 1
+    Tag:   FAMC
+0 @I2@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME John /Smith/
+    Level: 1
+    Tag:   NAME
+2 GIVN John
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Smith
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX M
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 6 APR 1910
+    Level: 2
+    Tag:   DATE
+1 DEAT Y
+    Level: 1
+    Tag:   DEAT
+2 DATE 4 APR 2000
+    Level: 2
+    Tag:   DATE
+1 FAMS @F2@
+    Level: 1
+    Tag:   FAMS
+1 FAMS @F3@
+    Level: 1
+    Tag:   FAMS
+1 FAMC @F4@
+    Level: 1
+    Tag:   FAMC
+0 @I3@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Kayla /Jenkins/
+    Level: 1
+    Tag:   NAME
+2 GIVN Kayla
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Jenkins
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX F
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 7 SEP 1910
+    Level: 2
+    Tag:   DATE
+1 DEAT Y
+    Level: 1
+    Tag:   DEAT
+2 DATE 12 JUL 1960
+    Level: 2
+    Tag:   DATE
+1 FAMS @F2@
+    Level: 1
+    Tag:   FAMS
+0 @I4@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Ryan /Smith/
+    Level: 1
+    Tag:   NAME
+2 GIVN Ryan
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Smith
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX M
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 2 MAR 1885
+    Level: 2
+    Tag:   DATE
+1 DEAT Y
+    Level: 1
+    Tag:   DEAT
+2 DATE 3 JUL 1945
+    Level: 2
+    Tag:   DATE
+1 FAMS @F4@
+    Level: 1
+    Tag:   FAMS
+0 @I5@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Kelly /Holdridge/
+    Level: 1
+    Tag:   NAME
+2 GIVN Kelly
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Holdridge
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Capur
+    Level: 2
+    Tag:   Invalid tag
+1 SEX F
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 2 MAR 1889
+    Level: 2
+    Tag:   DATE
+1 DEAT Y
+    Level: 1
+    Tag:   DEAT
+2 DATE 7 JUN 1940
+    Level: 2
+    Tag:   DATE
+1 FAMS @F4@
+    Level: 1
+    Tag:   FAMS
+0 @I6@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Pam /Halpert/
+    Level: 1
+    Tag:   NAME
+2 GIVN Pam
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Halpert
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX F
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 8 APR 1922
+    Level: 2
+    Tag:   DATE
+1 DEAT Y
+    Level: 1
+    Tag:   DEAT
+2 DATE 1 FEB 1996
+    Level: 2
+    Tag:   DATE
+1 FAMS @F3@
+    Level: 1
+    Tag:   FAMS
+0 @I7@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Philip /Lipton/
+    Level: 1
+    Tag:   NAME
+2 GIVN Philip
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Lipton
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Lipton
+    Level: 2
+    Tag:   Invalid tag
+1 SEX M
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 8 APR 1963
+    Level: 2
+    Tag:   DATE
+1 FAMC @F3@
+    Level: 1
+    Tag:   FAMC
+0 @I8@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Liz /Riordan/
+    Level: 1
+    Tag:   NAME
+2 GIVN Liz
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Riordan
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX F
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 3 OCT 1938
+    Level: 2
+    Tag:   DATE
+1 FAMS @F1@
+    Level: 1
+    Tag:   FAMS
+0 @I9@ INDI
+    Level: 0
+    Tag:   Invalid tag
+1 NAME Jacob /Smith/
+    Level: 1
+    Tag:   NAME
+2 GIVN Jacob
+    Level: 2
+    Tag:   Invalid tag
+2 SURN Smith
+    Level: 2
+    Tag:   Invalid tag
+2 _MARNM Smith
+    Level: 2
+    Tag:   Invalid tag
+1 SEX M
+    Level: 1
+    Tag:   SEX
+1 BIRT
+    Level: 1
+    Tag:   BIRT
+2 DATE 5 APR 1980
+    Level: 2
+    Tag:   DATE
+1 FAMC @F1@
+    Level: 1
+    Tag:   FAMC
+0 @F1@ FAM
+    Level: 0
+    Tag:   Invalid tag
+1 HUSB @I1@
+    Level: 1
+    Tag:   HUSB
+1 WIFE @I8@
+    Level: 1
+    Tag:   WIFE
+1 CHIL @I9@
+    Level: 1
+    Tag:   CHIL
+1 MARR
+    Level: 1
+    Tag:   MARR
+2 DATE 5 MAR 1979
+    Level: 2
+    Tag:   DATE
+1 _CURRENT Y
+    Level: 1
+    Tag:   Invalid tag
+0 @F2@ FAM
+    Level: 0
+    Tag:   Invalid tag
+1 HUSB @I2@
+    Level: 1
+    Tag:   HUSB
+1 WIFE @I3@
+    Level: 1
+    Tag:   WIFE
+1 CHIL @I1@
+    Level: 1
+    Tag:   CHIL
+1 MARR
+    Level: 1
+    Tag:   MARR
+2 DATE 2 JAN 1935
+    Level: 2
+    Tag:   DATE
+1 EVEN
+    Level: 1
+    Tag:   Invalid tag
+2 TYPE Ending
+    Level: 2
+    Tag:   Invalid tag
+1 _CURRENT N
+    Level: 1
+    Tag:   Invalid tag
+0 @F3@ FAM
+    Level: 0
+    Tag:   Invalid tag
+1 HUSB @I2@
+    Level: 1
+    Tag:   HUSB
+1 WIFE @I6@
+    Level: 1
+    Tag:   WIFE
+1 CHIL @I7@
+    Level: 1
+    Tag:   CHIL
+1 MARR
+    Level: 1
+    Tag:   MARR
+2 DATE 6 JUL 1962
+    Level: 2
+    Tag:   DATE
+1 _CURRENT Y
+    Level: 1
+    Tag:   Invalid tag
+0 @F4@ FAM
+    Level: 0
+    Tag:   Invalid tag
+1 HUSB @I4@
+    Level: 1
+    Tag:   HUSB
+1 WIFE @I5@
+    Level: 1
+    Tag:   WIFE
+1 CHIL @I2@
+    Level: 1
+    Tag:   CHIL
+1 _CURRENT Y
+    Level: 1
+    Tag:   Invalid tag
+0 TRLR
+    Level: 0
+    Tag:   TRLR
