@@ -101,7 +101,8 @@ public class ProjectFileReader
 		
 		// Read in and print out the file.
 		PFR.ReadFile("./DonatoZacharyP01.ged");
-		
+		// My comment.
+		System.out.println(" some message ");
 	}
 
 }
