@@ -24,7 +24,7 @@ public class ProjectFileReader
 	
 	
 	/**
-	 * Package array of acceptable tags for our project.
+	 * Private array of acceptable tags for our project.
 	 */
 	final private static ArrayList<String> ACCEPTED_TAGS = new ArrayList<String>() {{
 		add("INDI"); add("NAME"); add("SEX"); add("BIRT"); add("DEAT");
@@ -32,6 +32,20 @@ public class ProjectFileReader
 		add("HUSB"); add("WIFE"); add("CHIL"); add("DIV"); add("DATE");
 		add("HEAD"); add("TRLR"); add("NOTE");
 	}};
+	
+	// Constant strings for checking if the tag is an Individual or family.
+	final private static String INDI = "INDI";
+	final private static String FAM  = "FAM";
+	
+	/**
+	 * Private array to hold the individuals.
+	 */
+	private static ArrayList<Individual> individuals = new ArrayList<Individual>();
+	
+	/**
+	 * Private array to hold the families.
+	 */
+	private static ArrayList<Family> families = new ArrayList<Family>();
 
 	/**
 	 * Method to read in the GEDCOM file.
@@ -40,7 +54,10 @@ public class ProjectFileReader
 	public void ReadFile(String filename) 
 	{
 		String 			inputLine; 
-		String[] 		splits = new String[100];
+		String 			recordType;
+		String			level;
+		String 			tag;
+		String[] 		splits = new String[5];
 		BufferedReader 	in;
 		
 		try 
@@ -50,8 +67,174 @@ public class ProjectFileReader
 			
 			while (inputLine != null)
 			{
-				handleLine(inputLine);
-				inputLine = in.readLine();
+				recordType = getRecordType(inputLine);
+				
+				splits = inputLine.split(" ");
+				
+				// Create the individual.
+				if (recordType.equals(INDI))
+				{
+					level = "-1";
+					Individual new_indi = new Individual();
+					
+					// Set the id. 
+					new_indi.setId(splits[1]);
+					
+					inputLine = in.readLine();
+				
+					// Handle each line until the next record.
+					while ( !(level.equals("0")) )
+					{
+						splits = inputLine.split(" ");
+						
+						if (splits.length > 0)
+						{
+							// Determine tag and then set the correct property.
+							if ( ACCEPTED_TAGS.contains(splits[1]) )
+							{
+								tag = splits[1];
+								
+								if ( tag.equals("NAME") )
+								{	
+									String name = "";
+									for (int i = 2; i < splits.length; i++)
+									{
+										name += splits[i] + " ";
+									}
+									
+									new_indi.setName(name);
+								} 
+								else if ( tag.equals("SEX") )
+								{
+									new_indi.setSex(splits[2]);
+								}
+								else if ( tag.equals("BIRT") )
+								{
+									// Read the next line to get the birth date.
+									inputLine = in.readLine();
+									splits = inputLine.split(" ");
+									
+									String bd = "";
+									
+									for (int i = 2; i < splits.length; i++)
+									{
+										bd += splits[i] + " ";
+									}
+									
+									new_indi.setBirthDate(bd);
+								}
+								else if ( tag.equals("DEAT") )
+								{
+									// Read the next line to get the birth date.
+									inputLine = in.readLine();
+									splits = inputLine.split(" ");
+									
+									String dd = "";
+									
+									for (int i = 2; i < splits.length; i++)
+									{
+										dd += splits[i] + " ";
+									}
+									
+									new_indi.setDeathDate(dd);
+								}
+								else if ( tag.equals("FAMC") )
+								{
+									new_indi.setChildOf(splits[2]);
+								}
+								else if ( tag.equals("FAMS") )
+								{
+									new_indi.setSpouseOf(splits[2]);
+								}
+							}
+						}
+						
+						// Read in the next line, and split it up to check the level.
+						inputLine = in.readLine();
+						splits = inputLine.split(" ");
+						level = splits[0];
+					}
+					
+					individuals.add(new_indi);
+				}
+				else if (recordType.equals(FAM))
+				{
+					level = "-1";
+					Family new_fam = new Family();
+					
+					// Set the id. 
+					new_fam.setId(splits[1]);
+					
+					inputLine = in.readLine();
+				
+					// Handle each line until the next record.
+					while ( !(level.equals("0")) )
+					{
+						splits = inputLine.split(" ");
+						
+						if (splits.length > 0)
+						{
+							// Determine tag and then set the correct property.
+							if ( ACCEPTED_TAGS.contains(splits[1]) )
+							{
+								tag = splits[1];
+								if ( tag.equals("HUSB") )
+								{
+									new_fam.setHusband(splits[2]);
+								}
+								else if ( tag.equals("MARR") )
+								{
+									// Read the next line to get the birth date.
+									inputLine = in.readLine();
+									splits = inputLine.split(" ");
+									
+									String md = "";
+									
+									for (int i = 2; i < splits.length; i++)
+									{
+										md += splits[i] + " ";
+									}
+									
+									new_fam.setMarriageDate(md);
+								}
+								else if ( tag.equals("DIV") )
+								{
+									// Read the next line to get the birth date.
+									inputLine = in.readLine();
+									splits = inputLine.split(" ");
+									
+									String dd = "";
+									
+									for (int i = 2; i < splits.length; i++)
+									{
+										dd += splits[i] + " ";
+									}
+									
+									new_fam.setDivorceDate(dd);
+								}
+								else if ( tag.equals("WIFE") )
+								{
+									new_fam.setWife(splits[2]);
+								}
+								else if ( tag.equals("CHIL") )
+								{
+									new_fam.addChild(splits[2]);
+								}
+							}
+						}
+						
+						// Read in the next line, and split it up to check the level.
+						inputLine = in.readLine();
+						splits = inputLine.split(" ");
+						level = splits[0];
+					}
+					
+					families.add(new_fam);
+				}				
+				
+				else {
+					inputLine = in.readLine();
+				}
 			}
 			
 		}
@@ -64,32 +247,42 @@ public class ProjectFileReader
 	 * Private method to print out the contents of the file.
 	 * 
 	 * @param line 	: The line of the file.
-	 * @param level : The level of the line
-	 * @param tag 	: The tag of the line.
+	 * 
+	 * @return Returns either FAM or INDI to indicate which record type to create.
+	 * 			Will return "NONE" if not FAM or INDI.
 	 */
-	private static void handleLine(String line){
-		String level, tag;
+	private static String handleLine(String line){
+		return "";
+	}
+	
+	/**
+	 * Private method to determine the type of the record.
+	 * 
+	 * @param line : The line of the file.
+	 * 
+	 * @return Returns either FAM or INDI to indicate which record type to create.
+	 * 			Will return "NONE" if not FAM or INDI.
+	 */
+	private static String getRecordType(String line)
+	{
+		String level, recordType = "NONE";
 		
 		String[] splits = line.split(" ");
 		
-		if (splits.length != 0)
+		if (splits.length > 0) 
 		{
-			level = splits[0]; 
-			
-			// Check if the tag is valid for our project.
-			if (ACCEPTED_TAGS.contains(splits[1]))
+			level = splits[0];
+			// If level 0, check if dealing with INDI or FAM record.
+			if ("0".equals(level))
 			{
-				tag = splits[1];
-			} 
-			else {
-				tag = "Invalid tag";
+				if ( splits.length >= 3 && (FAM.equals(splits[2]) || INDI.equals(splits[2])))
+				{
+					recordType = splits[2];
+				}
 			}
-
-			// Print out the line, the level number and the tag for each line.
-			System.out.println(line);
-			System.out.println("    Level: " + level);
-			System.out.println("    Tag:   " + tag);
-		}	
+		}
+		
+		return recordType;
 	}
 	
 	/** 
@@ -101,9 +294,34 @@ public class ProjectFileReader
 		
 		// Read in and print out the file.
 		PFR.ReadFile("./DonatoZacharyP01.ged");
-		// My comment.
-		System.out.println(" some message ");
-		System.out.println("Zach's message");
+		
+		for (Individual indi : individuals)
+		{
+			System.out.println(indi.getId());
+			System.out.println(indi.getName());
+			System.out.println(indi.getBirthDate());
+			System.out.println(indi.getDeathDate());
+			System.out.println(indi.getSex());
+			System.out.println(indi.getSpouseOf());
+			System.out.println(indi.getChildOf());
+			System.out.println();
+		}
+		
+		for (Family fam : families)
+		{
+			System.out.println(fam.getId());
+			System.out.println(fam.getWife());
+			System.out.println(fam.getHusband());
+			System.out.println(fam.getMarriageDate());
+			System.out.println(fam.getDivorceDate());
+			System.out.print("Children: ");
+			for (String c : fam.getChildren())
+			{
+				System.out.print(c + " ");
+			}
+			System.out.println();
+			System.out.println();
+		}
 	}
 
 }
