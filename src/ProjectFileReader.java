@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class ProjectFileReader 
@@ -27,7 +28,7 @@ public class ProjectFileReader
 	 * Private array of acceptable tags for our project.
 	 */
 	final private static ArrayList<String> ACCEPTED_TAGS = new ArrayList<String>() {{
-		add("INDI"); add("NAME"); add("SEX"); add("BIRT"); add("DEAT");
+		add("INDI"); add("NAME");add("GIVN");add("SURN"); add("SEX"); add("BIRT"); add("DEAT");
 		add("FAMC"); add("FAMS"); add("FAM"); add("MARR"); add("HUSB");
 		add("HUSB"); add("WIFE"); add("CHIL"); add("DIV"); add("DATE");
 		add("HEAD"); add("TRLR"); add("NOTE");
@@ -53,6 +54,7 @@ public class ProjectFileReader
 	 */
 	public void ReadFile(String filename) 
 	{
+		
 		String 			inputLine; 
 		String 			recordType;
 		String			level;
@@ -78,7 +80,7 @@ public class ProjectFileReader
 					Individual new_indi = new Individual();
 					
 					// Set the id. 
-					new_indi.setId(splits[1]);
+					new_indi.setId_vo("0", INDI, splits[1]);
 					
 					inputLine = in.readLine();
 				
@@ -86,6 +88,7 @@ public class ProjectFileReader
 					while ( !(level.equals("0")) )
 					{
 						splits = inputLine.split(" ");
+						
 						
 						if (splits.length > 0)
 						{
@@ -102,11 +105,19 @@ public class ProjectFileReader
 										name += splits[i] + " ";
 									}
 									
-									new_indi.setName(name);
+									new_indi.setName_vo(splits[0], "NAME", name);
 								} 
+								else if ( tag.equals("GIVN") )
+								{
+									new_indi.setGivn_vo(splits[0], "GIVN", splits[2]);
+								}
+								else if ( tag.equals("SURN") )
+								{
+									new_indi.setSurn_vo(splits[0], "SURN", splits[2]);
+								}
 								else if ( tag.equals("SEX") )
 								{
-									new_indi.setSex(splits[2]);
+									new_indi.setSex_vo(splits[0], "SEX",splits[2]);
 								}
 								else if ( tag.equals("BIRT") )
 								{
@@ -121,7 +132,7 @@ public class ProjectFileReader
 										bd += splits[i] + " ";
 									}
 									
-									new_indi.setBirthDate(bd);
+									new_indi.setBirthDate_vo(splits[0], "DATE", bd);
 								}
 								else if ( tag.equals("DEAT") )
 								{
@@ -136,15 +147,15 @@ public class ProjectFileReader
 										dd += splits[i] + " ";
 									}
 									
-									new_indi.setDeathDate(dd);
+									new_indi.setDeathDate_vo(splits[0], "DATE",dd);
 								}
 								else if ( tag.equals("FAMC") )
 								{
-									new_indi.setChildOf(splits[2]);
+									new_indi.setChildOf_vo(splits[0], "FAMC",splits[2]);
 								}
 								else if ( tag.equals("FAMS") )
 								{
-									new_indi.setSpouseOf(splits[2]);
+									new_indi.setSpouseOf_vo(splits[0], "FAMS",splits[2]);
 								}
 							}
 						}
@@ -163,7 +174,7 @@ public class ProjectFileReader
 					Family new_fam = new Family();
 					
 					// Set the id. 
-					new_fam.setId(splits[1]);
+					new_fam.setId_vo("0","FAM",splits[1]);
 					
 					inputLine = in.readLine();
 				
@@ -171,7 +182,7 @@ public class ProjectFileReader
 					while ( !(level.equals("0")) )
 					{
 						splits = inputLine.split(" ");
-						
+							
 						if (splits.length > 0)
 						{
 							// Determine tag and then set the correct property.
@@ -180,7 +191,7 @@ public class ProjectFileReader
 								tag = splits[1];
 								if ( tag.equals("HUSB") )
 								{
-									new_fam.setHusband(splits[2]);
+									new_fam.setHusband_vo(splits[0], "HUSB",splits[2]);
 								}
 								else if ( tag.equals("MARR") )
 								{
@@ -195,7 +206,7 @@ public class ProjectFileReader
 										md += splits[i] + " ";
 									}
 									
-									new_fam.setMarriageDate(md);
+									new_fam.setMarriageDate_vo(splits[0], "DATE", md);
 								}
 								else if ( tag.equals("DIV") )
 								{
@@ -210,15 +221,15 @@ public class ProjectFileReader
 										dd += splits[i] + " ";
 									}
 									
-									new_fam.setDivorceDate(dd);
+									new_fam.setDivorceDate_vo(splits[0], "DIV", dd);
 								}
 								else if ( tag.equals("WIFE") )
 								{
-									new_fam.setWife(splits[2]);
+									new_fam.setWife_vo(splits[0], "WIFE", splits[2]);
 								}
 								else if ( tag.equals("CHIL") )
 								{
-									new_fam.addChild(splits[2]);
+									new_fam.getChildren().add(new VO(splits[0], "CHIL",splits[2]));
 								}
 							}
 						}
@@ -244,25 +255,13 @@ public class ProjectFileReader
 	}
 	
 	/**
-	 * Private method to print out the contents of the file.
-	 * 
-	 * @param line 	: The line of the file.
-	 * 
-	 * @return Returns either FAM or INDI to indicate which record type to create.
-	 * 			Will return "NONE" if not FAM or INDI.
-	 */
-	private static String handleLine(String line){
-		return "";
-	}
-	
-	/**
 	 * Private method to determine the type of the record.
 	 * 
 	 * @param line : The line of the file.
 	 * 
 	 * @return Returns either FAM or INDI to indicate which record type to create.
 	 * 			Will return "NONE" if not FAM or INDI.
-	 */
+	 */	
 	private static String getRecordType(String line)
 	{
 		String level, recordType = "NONE";
@@ -285,6 +284,25 @@ public class ProjectFileReader
 		return recordType;
 	}
 	
+	/**
+	 * Method to find an individual in the individuals array.
+	 * 
+	 * @param id - The ID of the individual to find.
+	 * @return Returns the individual Object if found, null otherwise.
+	 */
+	private static Individual findIndividualById(String id)
+	{
+		for (Individual indi : individuals)
+		{
+			if (indi.getId_vo().getTagValue().equals(id))
+			{
+				return indi;
+			}
+		}
+		
+		return null;
+	}
+	
 	/** 
 	 * Main method of the class
 	 * @param args
@@ -294,34 +312,43 @@ public class ProjectFileReader
 		
 		// Read in and print out the file.
 		PFR.ReadFile("./DonatoZacharyP01.ged");
+		String space=" ";
+
+		Collections.sort(individuals);
+		Collections.sort(families);
 		
+		System.out.println("Individuals: ");
 		for (Individual indi : individuals)
 		{
-			System.out.println(indi.getId());
-			System.out.println(indi.getName());
-			System.out.println(indi.getBirthDate());
-			System.out.println(indi.getDeathDate());
-			System.out.println(indi.getSex());
-			System.out.println(indi.getSpouseOf());
-			System.out.println(indi.getChildOf());
-			System.out.println();
+			// For each individual, print out their name and unique ID. 
+			System.out.println("	" + indi.getId_vo().getTagValue() + ": " + indi.getName_vo().getTagValue());
+			
 		}
 		
+		System.out.println();
+
+		System.out.println("Familes: ");
 		for (Family fam : families)
 		{
-			System.out.println(fam.getId());
-			System.out.println(fam.getWife());
-			System.out.println(fam.getHusband());
-			System.out.println(fam.getMarriageDate());
-			System.out.println(fam.getDivorceDate());
-			System.out.print("Children: ");
-			for (String c : fam.getChildren())
-			{
-				System.out.print(c + " ");
-			}
-			System.out.println();
-			System.out.println();
-		}
-	}
+			String hid = fam.getHusband_vo().getTagValue();
+			String wid = fam.getWife_vo().getTagValue();
+			System.out.println("	" + fam.getId_vo().getTagValue());
+			System.out.println("		Husband: " + hid + " " + findIndividualById(hid).getName_vo().getTagValue() );
+			System.out.println("		Wife   : " + wid + " " + findIndividualById(wid).getName_vo().getTagValue() );
 
+		}
+		
+		
+	}
+	private static String getStringFromVO(VO src_vo)
+	{
+		String result="",space=" ";
+		
+		if(src_vo!=null)
+		{
+			result=src_vo.getLevel()+space+src_vo.getTagName() +space+src_vo.getTagValue();
+		}
+		
+		return result;
+	}
 }

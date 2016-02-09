@@ -7,118 +7,103 @@
  * Individual record to hold the information of an individual.
  */
 
-public class Individual
+public class Individual implements Comparable
 {
 	// Private data members.
-	private String name;
-	private String sex;
-	private String birthDate;
-	private String deathDate;
-	private String childOf;
-	private String spouseOf;
-	private String id;
+	private VO name_vo; 
+	private VO sex_vo;
+	private VO birthDate_vo;
+	private VO deathDate_vo;
+	private VO childOf_vo;
+	private VO spouseOf_vo;
+	private VO id_vo;
+	private VO givn_vo;
+	private VO surn_vo;
+	private VO level_vo;
+	
+	
+	public VO getName_vo() {
+		return name_vo;
+	}
+	public void setName_vo(String level,String tagName,String value) {
+		this.name_vo =  new VO(level,tagName,value);
+	}
+	public VO getSex_vo() {
+		return sex_vo;
+	}
+	public void setSex_vo(String level,String tagName,String value) {
+		this.sex_vo =  new VO(level,tagName,value);
+	}
+	public VO getBirthDate_vo() {
+		return birthDate_vo;
+	}
+	public void setBirthDate_vo(String level,String tagName,String value) {
+		this.birthDate_vo =  new VO(level,tagName,value);
+	}
+	public VO getDeathDate_vo() {
+		return deathDate_vo;
+	}
+	public void setDeathDate_vo(String level,String tagName,String value) {
+		this.deathDate_vo =  new VO(level,tagName,value);
+	}
+	public VO getChildOf_vo() {
+		return childOf_vo;
+	}
+	public void setChildOf_vo(String level,String tagName,String value) {
+		this.childOf_vo =  new VO(level,tagName,value);
+	}
+	public VO getSpouseOf_vo() {
+		return spouseOf_vo;
+	}
+	public void setSpouseOf_vo(String level,String tagName,String value) {
+		this.spouseOf_vo =  new VO(level,tagName,value);
+	}
+	public VO getId_vo() {
+		return id_vo;
+	}
+	public void setId_vo(String level,String tagName,String value) {
+		this.id_vo =  new VO(level,tagName,value);
+	}
+	public VO getGivn_vo() {
+		return givn_vo;
+	}
+	public void setGivn_vo(String level,String tagName,String value) {
+		this.givn_vo =  new VO(level,tagName,value);
+	}
+	public VO getSurn_vo() {
+		return surn_vo;
+	}
+	public void setSurn_vo(String level,String tagName,String value) {
+		this.surn_vo =  new VO(level,tagName,value);
+	}
+	public VO getLevel_vo() {
+		return level_vo;
+	}
+	public void setLevel_vo(String level,String tagName,String value) {
+		this.level_vo =  new VO(level,tagName,value);
+	}
+	
+	/**
+	 * Method compareTo for sorting individuals.
+	 */
+	@Override
+	public int compareTo(Object o)
+	{
+		String thisValue = this.id_vo.getTagValue();
+		String compareValue = ( (Individual) o ).getId_vo().getTagValue();
+
+		int compare = thisValue.compareTo(compareValue);
+
+		if (compare < 0)
+		{
+			return -1;
+		}
+		else if (compare > 0)
+		{
+			return 1;
+		}
 		
-	/**
-	 * Parameterless constructor.
-	 */
-	public Individual() {}
-	
-	/**
-	 * Getter/setter for name.
-	 */
-	public String getName()
-	{
-		return this.name;
+		return 0;
 	}
-	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
-	/**
-	 * Getter/Setter for id.
-	 */
-	public String getId()
-	{
-		return this.id;
-	}
-	
-	public void setId(String id)
-	{
-		this.id = id;
-	}
-	
-	/**
-	 * Getter/Setter for sex.
-	 */
-	public String getSex()
-	{
-		return this.sex;
-	}
-	
-	public void setSex(String sex)
-	{
-		this.sex = sex;
-	}
-	
-	/**
-	 * Getter/Setter for birthdate.
-	 */
-	public String getBirthDate()
-	{
-		return this.birthDate;
-	}
-	
-	public void setBirthDate(String birthDate)
-	{
-		this.birthDate = birthDate;
-	}
-	
-	/**
-	 * Getter/Setter for deathdate.
-	 */
-	public String getDeathDate()
-	{
-		return this.deathDate;
-	}
-	
-	public void setDeathDate(String deathDate)
-	{
-		this.deathDate = deathDate;
-	}
-	
-	/**
-	 * Getter/setter for child of.
-	 */
-	public String getChildOf()
-	{
-		return this.childOf;
-	}
-	
-	public void setChildOf(String co)
-	{
-		this.childOf = co;
-	}
-	
-	/**
-	 * Getter/setter for spouse of.
-	 */
-	public String getSpouseOf()
-	{
-		return this.spouseOf;
-	}
-	
-	public void setSpouseOf(String so)
-	{
-		this.spouseOf = so;
-	}
-	
-	/**
-	 * Main method.
-	 */
-	public static void main(String[] args)
-	{
-		
-	}
+
 }

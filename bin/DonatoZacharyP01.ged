@@ -1,6 +1,4 @@
 0 NOTE Zachary Donato
-0 NOTE Dmitriy Grishin
-0 NOTE https://github.com/zdonato/GEDComReader.git
 0 HEAD
 1 SOUR Family Echo
 2 WWW http://www.familyecho.com/
@@ -24,6 +22,17 @@
 2 DATE 3 OCT 1936
 1 FAMS @F1@
 1 FAMC @F2@
+0 @I3@ INDI
+1 NAME Kayla /Jenkins/
+2 GIVN Kayla
+2 SURN Jenkins
+2 _MARNM Smith
+1 SEX F
+1 BIRT
+2 DATE 7 SEP 1910
+1 DEAT Y
+2 DATE 12 JUL 1960
+1 FAMS @F2@
 0 @I2@ INDI
 1 NAME John /Smith/
 2 GIVN John
@@ -37,17 +46,6 @@
 1 FAMS @F2@
 1 FAMS @F3@
 1 FAMC @F4@
-0 @I3@ INDI
-1 NAME Kayla /Jenkins/
-2 GIVN Kayla
-2 SURN Jenkins
-2 _MARNM Smith
-1 SEX F
-1 BIRT
-2 DATE 7 SEP 1910
-1 DEAT Y
-2 DATE 12 JUL 1960
-1 FAMS @F2@
 0 @I4@ INDI
 1 NAME Ryan /Smith/
 2 GIVN Ryan
@@ -91,9 +89,9 @@
 2 DATE 8 APR 1963
 1 FAMC @F3@
 0 @I8@ INDI
-1 NAME Liz /Riordan/
-2 GIVN Liz
-2 SURN Riordan
+1 NAME Tupac /Shakur/
+2 GIVN Tupac
+2 SURN Shakur
 2 _MARNM Smith
 1 SEX F
 1 BIRT

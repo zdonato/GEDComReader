@@ -9,116 +9,81 @@
 
 import java.util.ArrayList;
 
-public class Family 
+public class Family implements Comparable
 {
 	// Private data members.
-	private String id;
-	private String marriageDate;
-	private String husband;
-	private String wife;
-	private ArrayList<String> children = new ArrayList<String>();
-	private String divorceDate;
-	
-	/**
-	 * Paramaterless constructor.
-	 */
-	public Family () {}
-	
-	/**
-	 * Getter/setter for id;
-	 */
-	public String getId()
-	{
-		return this.id;
+	 private VO id_vo;
+	 private VO marriageDate_vo;
+	 private VO husband_vo; 
+	 private VO wife_vo; 	 
+	 private ArrayList<VO> children = new ArrayList<VO>();	
+	 private VO divorceDate_vo; 
+	 private VO chil_vo;
+	 
+	 public VO getId_vo() {
+		return id_vo;
 	}
-	
-	public void setId(String id)
-	{
-		this.id = id;
+	public VO getChil_vo() {
+		return chil_vo;
 	}
-	
-	/**
-	 * Getter/setter for marriageDate.
-	 */
-	public String getMarriageDate()
-	{
-		return this.marriageDate;
+	public void setChil_vo(String level,String tagName,String value) {
+		this.chil_vo =new VO(level,tagName,value);
 	}
-	
-	public void setMarriageDate(String md)
-	{
-		this.marriageDate = md;
-	}
-	
-	/**
-	 * Getter/setter for husband.
-	 */
-	public String getHusband()
-	{
-		return this.husband;
-	}
-	
-	/**
-	 * Method to set the husband of the family.
-	 * @param h : The ID of the husband Individual.
-	 */
-	public void setHusband(String h)
-	{
-		this.husband = h;
-	}
-	
-	/** 
-	 * Getter/setter for wife.
-	 */
-	public String getWife()
-	{
-		return this.wife;
-	}
-	
-	/**
-	 * Method to set the wife of the family.
-	 * @param w : The ID of the wife Individual.
-	 */
-	public void setWife(String w)
-	{
-		this.wife = w;
-	}
-	
-	/**
-	 * Getter/setter for children.
-	 */
-	public ArrayList<String> getChildren()
-	{
-		return this.children;
-	}
-	
-	/**
-	 * Method to set the children of the family. 
-	 * @param c : The ID of the child individual.
-	 */
-	public void addChild(String c)
-	{
-		this.children.add(c);
-	}
-	
-	/**
-	 * Getter/setter for divorce.
-	 */
-	public String getDivorceDate()
-	{
-		return this.divorceDate;
-	}
-	
-	public void setDivorceDate(String dd)
-	{
-		this.divorceDate = dd;
-	}
-	
-	/**
-	 * Main method.
-	 */
-	public static void main(String[] args)
-	{
+	public void setId_vo(String level,String tagName,String value) {
 		
+		this.id_vo = new VO(level,tagName,value);
+	}
+	public VO getMarriageDate_vo() {
+		return marriageDate_vo;
+	}
+	public void setMarriageDate_vo(String level,String tagName,String value) {
+		this.marriageDate_vo = new VO(level,tagName,value);
+	}
+	public VO getHusband_vo() {
+		return husband_vo;
+	}
+	public void setHusband_vo(String level,String tagName,String value) {
+		this.husband_vo = new VO(level,tagName,value);
+	}
+	public VO getWife_vo() {
+		return wife_vo;
+	}
+	public void setWife_vo(String level,String tagName,String value) {
+		this.wife_vo = new VO(level,tagName,value);
+	}
+	public ArrayList<VO> getChildren() {
+		return children;
+	}
+	public void setChildren(ArrayList<VO> children) {
+		this.children = children;
+	}
+	public VO getDivorceDate_vo() {
+		return divorceDate_vo;
+	}
+	public void setDivorceDate_vo(String level,String tagName,String value) {
+		this.divorceDate_vo = new VO(level,tagName,value);
+	}
+	
+	/**
+	 * Method compareTo for sorting individuals.
+	 */
+	@Override
+	public int compareTo(Object o)
+	{
+		String thisValue = this.id_vo.getTagValue();
+		String compareValue = ( (Family) o ).getId_vo().getTagValue();
+
+		int compare = thisValue.compareTo(compareValue);
+
+		if (compare < 0)
+		{
+			return -1;
+		}
+		else if (compare > 0)
+		{
+			return 1;
+		}
+		
+		return 0;
 	}
 }
