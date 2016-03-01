@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class ProjectFileReader 
@@ -255,13 +254,26 @@ public class ProjectFileReader
 	}
 	
 	/**
+	 * Private method to print out the contents of the file.
+	 * 
+	 * @param line 	: The line of the file.
+	 * 
+	 * @return Returns either FAM or INDI to indicate which record type to create.
+	 * 			Will return "NONE" if not FAM or INDI.
+	 */
+	private static String handleLine(String line){
+		return "";
+	}
+	
+	/**
 	 * Private method to determine the type of the record.
 	 * 
 	 * @param line : The line of the file.
 	 * 
 	 * @return Returns either FAM or INDI to indicate which record type to create.
 	 * 			Will return "NONE" if not FAM or INDI.
-	 */	
+	 */
+	
 	private static String getRecordType(String line)
 	{
 		String level, recordType = "NONE";
@@ -284,25 +296,6 @@ public class ProjectFileReader
 		return recordType;
 	}
 	
-	/**
-	 * Method to find an individual in the individuals array.
-	 * 
-	 * @param id - The ID of the individual to find.
-	 * @return Returns the individual Object if found, null otherwise.
-	 */
-	private static Individual findIndividualById(String id)
-	{
-		for (Individual indi : individuals)
-		{
-			if (indi.getId_vo().getTagValue().equals(id))
-			{
-				return indi;
-			}
-		}
-		
-		return null;
-	}
-	
 	/** 
 	 * Main method of the class
 	 * @param args
@@ -311,44 +304,110 @@ public class ProjectFileReader
 		ProjectFileReader PFR = new ProjectFileReader();
 		
 		// Read in and print out the file.
-		PFR.ReadFile("./DonatoZacharyP01.ged");
+		PFR.ReadFile("./DonatoZacharyP01_US01_02_input.ged");
 		String space=" ";
-
-		Collections.sort(individuals);
-		Collections.sort(families);
 		
-		System.out.println("Individuals: ");
 		for (Individual indi : individuals)
 		{
-			// For each individual, print out their name and unique ID. 
-			System.out.println("	" + indi.getId_vo().getTagValue() + ": " + indi.getName_vo().getTagValue());
+			 
+			//comments for test
+			System.out.println(Utils.getStringFromVO(indi.getId_vo()));	 
+			System.out.println(Utils.getStringFromVO(indi.getName_vo()));
+			System.out.println(Utils.getStringFromVO(indi.getGivn_vo()));
+			 
+			System.out.println(Utils.getStringFromVO(indi.getSurn_vo()));
+			if(indi.getBirthDate_vo()!=null)
+				System.out.println(indi.getBirthDate_vo().getLevel()+" BIRT"); 
+			System.out.println(Utils.getStringFromVO(indi.getBirthDate_vo()));
 			
+			if(indi.getDeathDate_vo()!=null)
+			{
+				System.out.println(indi.getDeathDate_vo().getLevel()+" DEAT");
+				System.out.println(Utils.getStringFromVO(indi.getDeathDate_vo()));
+				
+				// Check for death before birth. 
+				if (indi.getBirthDate_vo() != null)
+				{
+					String[] msg=new String[]{""};			
+					if(!Utils.compareDate(indi.getBirthDate_vo().getTagValue(), indi.getDeathDate_vo().getTagValue(),msg,false,true))
+					{
+						System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"was born "+msg[0] + " was dead!").toUpperCase());
+					}	
+					
+					// Check if death date was less than 150 years after birth date.
+					if (!Utils.isUnder150YearsOld(indi.getBirthDate_vo().getTagValue(), indi.getDeathDate_vo().getTagValue()))
+					{
+						System.out.println( "\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " older than 150\n" );
+					}
+				}
+			} else 
+			{
+				// Check to make sure user is under 150 years old.
+				if (!Utils.isUnder150YearsOld(indi.getBirthDate_vo().getTagValue(), null))
+				{
+					System.out.println( "\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " older than 150\n" );
+				}
+			}
+			
+			System.out.println(Utils.getStringFromVO(indi.getSex_vo()));
+			System.out.println(Utils.getStringFromVO(indi.getSpouseOf_vo())); 
+			System.out.println(Utils.getStringFromVO(indi.getChildOf_vo()));
+			System.out.println();
 		}
 		
-		System.out.println();
-
-		System.out.println("Familes: ");
 		for (Family fam : families)
 		{
-			String hid = fam.getHusband_vo().getTagValue();
-			String wid = fam.getWife_vo().getTagValue();
-			System.out.println("	" + fam.getId_vo().getTagValue());
-			System.out.println("		Husband: " + hid + " " + findIndividualById(hid).getName_vo().getTagValue() );
-			System.out.println("		Wife   : " + wid + " " + findIndividualById(wid).getName_vo().getTagValue() );
+			System.out.println(Utils.getStringFromVO(fam.getId_vo()));
+			System.out.println(Utils.getStringFromVO(fam.getWife_vo()));
+			System.out.println(Utils.getStringFromVO(fam.getHusband_vo()));
+			
+			if(fam.getMarriageDate_vo()!=null)
+			{
+				System.out.println(fam.getMarriageDate_vo().getLevel()+" MARR");
+				System.out.println(Utils.getStringFromVO(fam.getMarriageDate_vo()));
+				
+				//check wife
+				Individual indi=Utils.searchPersonBD(individuals, fam.getWife_vo().getTagValue());		
+				String[] msg=new String[]{""};			
+				if(!Utils.compareDate(fam.getMarriageDate_vo().getTagValue(), indi.getBirthDate_vo().getTagValue(),msg,true,false))
+				{
+					System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"was born "+msg[0] + " was married!").toUpperCase());
+				}
+				if (indi.getDeathDate_vo() != null &&
+						!Utils.compareDate(fam.getMarriageDate_vo().getTagValue(), indi.getDeathDate_vo().getTagValue(), msg, false, true))
+				{
+					System.out.println("\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " died before marriage date.\n");
+				}
 
+				//check husband		
+				indi=Utils.searchPersonBD(individuals, fam.getHusband_vo().getTagValue());				
+				if(!Utils.compareDate(fam.getMarriageDate_vo().getTagValue(), indi.getBirthDate_vo().getTagValue(),msg,true, false))
+				{
+					System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"was born "+msg[0]+" was married!").toUpperCase());
+				}
+				if (indi.getDeathDate_vo() != null &&
+						!Utils.compareDate(fam.getMarriageDate_vo().getTagValue(), indi.getDeathDate_vo().getTagValue(), msg, false, true))
+				{
+					System.out.println("\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " died before marriage date.\n");
+				}
+							 
+			}
+			
+			if(fam.getDivorceDate_vo()!=null)
+			{
+				System.out.println(fam.getDivorceDate_vo().getLevel()+" DIV");
+				System.out.println(Utils.getStringFromVO(fam.getDivorceDate_vo()));
+			}
+			
+			 			 
+			for (VO chilvo : fam.getChildren())
+				System.out.println(Utils.getStringFromVO(chilvo));
+			
+			System.out.println();
+			System.out.println();
 		}
 		
 		
 	}
-	private static String getStringFromVO(VO src_vo)
-	{
-		String result="",space=" ";
-		
-		if(src_vo!=null)
-		{
-			result=src_vo.getLevel()+space+src_vo.getTagName() +space+src_vo.getTagValue();
-		}
-		
-		return result;
-	}
+	
 }

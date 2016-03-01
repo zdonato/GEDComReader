@@ -9,7 +9,7 @@
 
 import java.util.ArrayList;
 
-public class Family implements Comparable
+public class Family 
 {
 	// Private data members.
 	 private VO id_vo;
@@ -64,26 +64,5 @@ public class Family implements Comparable
 		this.divorceDate_vo = new VO(level,tagName,value);
 	}
 	
-	/**
-	 * Method compareTo for sorting individuals.
-	 */
-	@Override
-	public int compareTo(Object o)
-	{
-		String thisValue = this.id_vo.getTagValue();
-		String compareValue = ( (Family) o ).getId_vo().getTagValue();
-
-		int compare = thisValue.compareTo(compareValue);
-
-		if (compare < 0)
-		{
-			return -1;
-		}
-		else if (compare > 0)
-		{
-			return 1;
-		}
-		
-		return 0;
-	}
+	//comments for test
 }

@@ -7,7 +7,7 @@
  * Individual record to hold the information of an individual.
  */
 
-public class Individual implements Comparable
+public class Individual
 {
 	// Private data members.
 	private VO name_vo; 
@@ -83,27 +83,6 @@ public class Individual implements Comparable
 		this.level_vo =  new VO(level,tagName,value);
 	}
 	
-	/**
-	 * Method compareTo for sorting individuals.
-	 */
-	@Override
-	public int compareTo(Object o)
-	{
-		String thisValue = this.id_vo.getTagValue();
-		String compareValue = ( (Individual) o ).getId_vo().getTagValue();
-
-		int compare = thisValue.compareTo(compareValue);
-
-		if (compare < 0)
-		{
-			return -1;
-		}
-		else if (compare > 0)
-		{
-			return 1;
-		}
-		
-		return 0;
-	}
-
+	//comments for test
+	
 }
