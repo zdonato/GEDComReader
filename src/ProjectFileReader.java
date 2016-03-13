@@ -29,7 +29,7 @@ public class ProjectFileReader
 	final private static ArrayList<String> ACCEPTED_TAGS = new ArrayList<String>() {{
 		add("INDI"); add("NAME");add("GIVN");add("SURN"); add("SEX"); add("BIRT"); add("DEAT");
 		add("FAMC"); add("FAMS"); add("FAM"); add("MARR"); add("HUSB");
-		add("HUSB"); add("WIFE"); add("CHIL"); add("DIV"); add("DATE");
+		add("HUSB"); add("WIFE"); add("WIFE_2");add("CHIL"); add("DIV"); add("DATE");
 		add("HEAD"); add("TRLR"); add("NOTE");
 	}};
 	
@@ -226,6 +226,10 @@ public class ProjectFileReader
 								{
 									new_fam.setWife_vo(splits[0], "WIFE", splits[2]);
 								}
+								else if ( tag.equals("WIFE_2") )
+								{
+									new_fam.setWife_2_vo(splits[0], "WIFE_2", splits[2]);
+								}					
 								else if ( tag.equals("CHIL") )
 								{
 									new_fam.getChildren().add(new VO(splits[0], "CHIL",splits[2]));
@@ -304,7 +308,9 @@ public class ProjectFileReader
 		ProjectFileReader PFR = new ProjectFileReader();
 		
 		// Read in and print out the file.
-		PFR.ReadFile("./DonatoZacharyP01_US01_02_input.ged");
+		//PFR.ReadFile("./DonatoZacharyP01_US01_02_input.ged");
+		PFR.ReadFile("./DonatoZachary_Dmitriy P01_US06_11_input.ged");
+		
 		String space=" ";
 		
 		for (Individual indi : individuals)
@@ -359,6 +365,7 @@ public class ProjectFileReader
 		{
 			System.out.println(Utils.getStringFromVO(fam.getId_vo()));
 			System.out.println(Utils.getStringFromVO(fam.getWife_vo()));
+			System.out.println(Utils.getStringFromVO(fam.getWife_2_vo()));
 			System.out.println(Utils.getStringFromVO(fam.getHusband_vo()));
 			
 			if(fam.getMarriageDate_vo()!=null)
@@ -390,13 +397,31 @@ public class ProjectFileReader
 				{
 					System.out.println("\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " died before marriage date.\n");
 				}
-							 
+					
 			}
 			
+			//check for bigamy US11
+			if(fam.getWife_2_vo()!=null)
+			{
+				Individual indi=Utils.searchIndiById(individuals, fam.getHusband_vo().getTagValue());
+				
+				System.out.println("\n" + indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " has two wifes (bigamy)!\n");
+			}
+			
+		 
+			//check if was divorced before death
 			if(fam.getDivorceDate_vo()!=null)
 			{
 				System.out.println(fam.getDivorceDate_vo().getLevel()+" DIV");
 				System.out.println(Utils.getStringFromVO(fam.getDivorceDate_vo()));
+				
+				Individual indi=Utils.searchPersonBD(individuals, fam.getHusband_vo().getTagValue());	
+				String[] msg=new String[]{""};			
+				//if(!Utils.compareDate(fam.getDivorceDate_vo().getTagValue(), indi.getBirthDate_vo().getTagValue(),msg,true,false))
+				if(!Utils.compareDate(indi.getDeathDate_vo().getTagValue(), fam.getDivorceDate_vo().getTagValue(),msg,false,true))
+				{
+					System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"divorced  "+fam.getDivorceDate_vo().getTagValue() + " before deat "+ indi.getDeathDate_vo().getTagValue()).toUpperCase());
+				}
 			}
 			
 			 			 

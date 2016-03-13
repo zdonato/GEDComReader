@@ -15,8 +15,16 @@ public class Family
 	 private VO id_vo;
 	 private VO marriageDate_vo;
 	 private VO husband_vo; 
-	 private VO wife_vo; 	 
-	 private ArrayList<VO> children = new ArrayList<VO>();	
+	 private VO wife_vo; 	
+	 private VO wife_2_vo; 
+	 public VO getWife_2_vo() {
+		return wife_2_vo;
+	}
+
+	public void setWife_2_vo(String level,String tagName,String value) {
+		this.wife_2_vo = new VO(level,tagName,value);
+	}
+	private ArrayList<VO> children = new ArrayList<VO>();	
 	 private VO divorceDate_vo; 
 	 private VO chil_vo;
 	 

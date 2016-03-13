@@ -121,4 +121,23 @@ public  class Utils {
 		
 		return result;
 	}
+	public static Individual searchIndiById(ArrayList<Individual> individuals, String id_to_search)
+	{
+		 
+		Individual indi_to_return=null;
+		
+		for (Individual indi : individuals)
+		{
+			if(id_to_search.equalsIgnoreCase(indi.getId_vo().getTagValue())) 
+			{
+			/*	if(indi.getGivn_vo()!=null)
+					System.out.println(indi.getBirthDate_vo().getLevel()+" GIVN"); 
+				
+				System.out.println(getStringFromVO(indi.getGivn_vo()));*/
+				indi_to_return=indi;
+				break;
+			}
+		}
+		return indi_to_return;
+	}
 }
