@@ -358,6 +358,10 @@ public class ProjectFileReader
 			System.out.println(Utils.getStringFromVO(indi.getSex_vo()));
 			System.out.println(Utils.getStringFromVO(indi.getSpouseOf_vo())); 
 			System.out.println(Utils.getStringFromVO(indi.getChildOf_vo()));
+			
+			// Check to make sure all dates are before the current date.
+			Utils.ensureIndividualsDatesBeforeCurrentDate(indi);
+			
 			System.out.println();
 		}
 		
@@ -418,12 +422,14 @@ public class ProjectFileReader
 				Individual indi=Utils.searchPersonBD(individuals, fam.getHusband_vo().getTagValue());	
 				String[] msg=new String[]{""};			
 				//if(!Utils.compareDate(fam.getDivorceDate_vo().getTagValue(), indi.getBirthDate_vo().getTagValue(),msg,true,false))
-				if(!Utils.compareDate(indi.getDeathDate_vo().getTagValue(), fam.getDivorceDate_vo().getTagValue(),msg,false,true))
+				if(!Utils.compareDate(indi.getDeathDate_vo().getTagValue(), fam.getDivorceDate_vo().getTagValue(),msg,true,false))
 				{
-					System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"divorced  "+fam.getDivorceDate_vo().getTagValue() + " before deat "+ indi.getDeathDate_vo().getTagValue()).toUpperCase());
+					System.out.println((indi.getId_vo().getTagValue()+space+indi.getName_vo().getTagValue()+space+"divorced  "+fam.getDivorceDate_vo().getTagValue() + " after death "+ indi.getDeathDate_vo().getTagValue()).toUpperCase());
 				}
 			}
 			
+			// Ensure all dates before current date.
+			Utils.ensureFamilyDatesBeforeCurrentDate(fam);
 			 			 
 			for (VO chilvo : fam.getChildren())
 				System.out.println(Utils.getStringFromVO(chilvo));

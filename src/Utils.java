@@ -140,4 +140,85 @@ public  class Utils {
 		}
 		return indi_to_return;
 	}
+	
+	/**
+	 * Method to check that an Individual's dates are all before the current date.
+	 * @param indi : Individual to check
+	 * 
+	 */
+	public static void ensureIndividualsDatesBeforeCurrentDate(Individual indi)
+	{
+		// Check birth date.
+		if (indi.getBirthDate_vo() != null)
+		{
+			VO birthDate = indi.getBirthDate_vo();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+			Date currDate = new Date();
+			String[] msg=new String[]{""};
+			if (!compareDate(birthDate.getTagValue(), sdf.format(currDate), msg, false, true))
+			{
+				System.out.println(indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " birth date " + birthDate.getTagValue() + " is after the current date.");
+			}
+		}
+		
+		// Check death date.
+		if (indi.getDeathDate_vo() != null)
+		{
+			VO deathDate = indi.getDeathDate_vo();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+			Date currDate = new Date();
+			String[] msg=new String[]{""};
+			if (!compareDate(deathDate.getTagValue(), sdf.format(currDate), msg, false, true))
+			{
+				System.out.println(indi.getId_vo().getTagValue() + " " + indi.getName_vo().getTagValue() + " death date " + deathDate.getTagValue() + " is after the current date.");
+			}
+		}
+	}
+	
+	/**
+	 * Method to check that a Family's dates are all before the current date.
+	 * @param fam : Family to check
+	 */
+	public static void ensureFamilyDatesBeforeCurrentDate(Family fam)
+	{
+		// Check marriage date.
+		if (fam.getMarriageDate_vo() != null)
+		{
+			VO marriageDate = fam.getMarriageDate_vo();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+			Date currDate = new Date();
+			String[] msg = new String[]{""};
+			if (!compareDate(marriageDate.getTagValue(), sdf.format(currDate), msg, false, true))
+			{
+				System.out.println(fam.getId_vo().getTagValue() + " marriage date " + marriageDate.getTagValue() + " is after current date.");
+			}
+		}
+		
+		if (fam.getDivorceDate_vo() != null)
+		{
+			VO divorceDate = fam.getDivorceDate_vo();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+			Date currDate = new Date();
+			String[] msg = new String[]{""};
+			
+			if (!compareDate(divorceDate.getTagValue(), sdf.format(currDate), msg, false, true))
+			{
+				System.out.println(fam.getId_vo().getTagValue() + " divorce date " + divorceDate.getTagValue() + " is after current date.");
+			}
+		}
+	}
+	
+	/**
+	 * Method to check if child is born after the marriage of their parents and before their divorce.
+	 * @param indi : Child to check
+	 * @param fam : Family to check
+	 */
+	public static void ensureChildBornAfterMarriage(Individual indi, Family fam)
+	{
+		
+	}
 }
