@@ -432,7 +432,15 @@ public class ProjectFileReader
 			Utils.ensureFamilyDatesBeforeCurrentDate(fam);
 			 			 
 			for (VO chilvo : fam.getChildren())
+			{
 				System.out.println(Utils.getStringFromVO(chilvo));
+				Individual indi = Utils.searchIndiById(individuals, chilvo.getTagValue());
+				if (indi != null)
+				{
+					Utils.ensureChildBornAfterMarriage(indi, fam);
+				}
+			}
+
 			
 			System.out.println();
 			System.out.println();

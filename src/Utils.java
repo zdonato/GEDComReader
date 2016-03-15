@@ -219,6 +219,35 @@ public  class Utils {
 	 */
 	public static void ensureChildBornAfterMarriage(Individual indi, Family fam)
 	{
+		if (fam.getMarriageDate_vo() != null)
+		{
+			VO marriageDate = fam.getMarriageDate_vo();
+			
+			// Check if individual has birth date.
+			if (indi.getBirthDate_vo() != null)
+			{
+				String[] msg = new String[]{""};
+				if (!compareDate(marriageDate.getTagValue(), indi.getBirthDate_vo().getTagValue(), msg, false, true))
+				{
+					System.out.println(indi.getId_vo().getTagValue() + " born into family " + fam.getId_vo().getTagValue() + " before marriage date.");
+				}
+			}
+			
+		}
 		
+		if (fam.getDivorceDate_vo() != null)
+		{
+			VO divorceDate = fam.getDivorceDate_vo();
+			
+			// Check if individual has birth date.
+			if (indi.getBirthDate_vo() != null)
+			{
+				String[] msg = new String[]{""};
+				if (!compareDate(indi.getBirthDate_vo().getTagValue(), divorceDate.getTagValue(), msg, false, true))
+				{
+					System.out.println(indi.getId_vo().getTagValue() + " born into family " + fam.getId_vo().getTagValue() + " after divorce date.");
+				}
+			}
+		}
 	}
 }
