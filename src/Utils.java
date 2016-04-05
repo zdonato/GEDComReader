@@ -364,4 +364,77 @@ public  class Utils {
 			}
 		}
 	}
+	
+	/**
+	 * Method to ensure that all ids are unique.
+	 * @param individuals : The array of individuals
+	 * @param families : The array of families
+	 * 
+	 */
+	public static void ensureAllIDsUnique(ArrayList<Individual> individuals, ArrayList<Family> families){
+		ArrayList<String> ids = new ArrayList<String>();
+		
+		for (Individual indi : individuals){
+			String id = indi.getId_vo().getTagValue();
+			
+			if (ids.contains(id))
+			{
+				System.out.println(id + " is not unique.");
+				continue;
+			}
+			
+			ids.add(id);
+		}
+		
+		for (Family fam : families){
+			String id = fam.getId_vo().getTagValue();
+			
+			if (ids.contains(id))
+			{
+				System.out.println(id + " is not unique.");
+				continue;
+			}
+			
+			ids.add(id);
+		}
+	}
+	
+	/**
+	 * Method to ensure that each spouse is at least 14 years old.
+	 * @param husband
+	 * @param wife
+	 * @param md - marriage date
+	 */
+	public static void ensureSpouseIsAtLeast14(Individual husband, Individual wife, String md){				
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+		
+		try {
+			Date marriage_date = sdf.parse(md);
+			Calendar cal_marriage = Calendar.getInstance();
+			cal_marriage.setTime(marriage_date);
+			int marriage_year = cal_marriage.get(Calendar.YEAR);	
+			
+			Date birth_date_husband = sdf.parse(husband.getBirthDate_vo().getTagValue());
+			Calendar cal_bd_husband = Calendar.getInstance();
+			cal_bd_husband.setTime(birth_date_husband);
+			int birth_year_husband = cal_bd_husband.get(Calendar.YEAR);
+			
+			Date birth_date_wife = sdf.parse(wife.getBirthDate_vo().getTagValue());
+			Calendar cal_bd_wife = Calendar.getInstance();
+			cal_bd_wife.setTime(birth_date_wife);
+			int birth_year_wife = cal_bd_wife.get(Calendar.YEAR);
+			
+			if (marriage_year - birth_year_husband < 14){
+				System.out.println(husband.getId_vo().getTagValue() + " married before he was 14");
+			}
+			
+			if (marriage_year - birth_year_wife < 14){
+				System.out.println(wife.getId_vo().getTagValue() + " married before she was 14");
+			}
+			
+		} catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

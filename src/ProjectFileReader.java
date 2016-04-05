@@ -440,6 +440,13 @@ public class ProjectFileReader
 					Utils.ensureChildBornAfterMarriage(indi, fam);
 				}
 			}
+			
+			// Ensure marriage date is after both husband and wife are at least 14.
+			Individual husband = Utils.searchIndiById(individuals, fam.getHusband_vo().getTagValue());
+			Individual wife = Utils.searchIndiById(individuals, fam.getWife_vo().getTagValue());
+			if (husband != null && wife != null && fam.getMarriageDate_vo() != null){
+				Utils.ensureSpouseIsAtLeast14(husband, wife, fam.getMarriageDate_vo().getTagValue());
+			}
 
 			Utils.verifyIfParentsTooOld(fam,individuals);
 			Utils.verifyIfSiblings(fam,individuals,families);
@@ -447,6 +454,8 @@ public class ProjectFileReader
 			System.out.println();
 		}
 		
+		// Ensure all ids are unique.
+		Utils.ensureAllIDsUnique(individuals, families);
 		
 	}
 	
