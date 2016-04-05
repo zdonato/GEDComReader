@@ -441,7 +441,8 @@ public class ProjectFileReader
 				}
 			}
 
-			
+			Utils.verifyIfParentsTooOld(fam,individuals);
+			Utils.verifyIfSiblings(fam,individuals,families);
 			System.out.println();
 			System.out.println();
 		}

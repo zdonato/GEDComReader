@@ -212,6 +212,120 @@ public  class Utils {
 		}
 	}
 	
+	public static boolean verifyIfSiblings(Family src_fam,ArrayList<Individual> individuals,ArrayList<Family> families)
+	{
+		
+		boolean bresult=false;
+		
+		if(src_fam.getChildren()!=null)
+		{
+			Individual src_indi_child=searchPersonBD(individuals,src_fam.getChildren().get(0).getTagValue());
+			getSiblings(src_fam,searchPersonBD(individuals,src_fam.getHusband_vo().getTagValue()),src_indi_child,families,individuals);
+	 
+		}
+		return bresult;
+	}
+	
+	private static void getSiblings(Family src_fam,Individual src_indi_parent,Individual src_indi_child,ArrayList<Family> families,ArrayList<Individual> individuals)
+	{
+		for (Family fam : families)
+		{
+			if(!src_fam.getId_vo().getTagValue().equalsIgnoreCase(fam.getId_vo().getTagValue()))
+			{
+				String id=fam.getHusband_vo().getTagValue();
+				String src_id=src_indi_parent.getId_vo().getTagValue();
+				if(src_id.equals(id))
+				{
+					if(fam.getChildren()!=null)
+					{
+						Individual indi_sibling = searchPersonBD(individuals,fam.getChildren().get(0).getTagValue());
+						long dif=1;
+						if(compareDatesGreaterThan(src_indi_child.getBirthDate_vo().getTagValue(),indi_sibling.getBirthDate_vo().getTagValue(),1))		
+						{
+							System.out.println(src_indi_child.getName_vo().getTagValue() + "src child BD: "+ src_indi_child.getBirthDate_vo().getTagValue());
+							System.out.println(indi_sibling.getName_vo().getTagValue() + "sibling BD: "+ indi_sibling.getBirthDate_vo().getTagValue());
+							
+							System.out.println(src_indi_child.getName_vo().getTagValue() +" "+ "birthday validation less then " +dif+ " year(s) " + "of the sibling " +  indi_sibling.getName_vo().getTagValue());
+						}
+					}
+				
+				}
+			}	 
+		}
+	}
+	public static boolean verifyIfParentsTooOld(Family fam,ArrayList<Individual> individuals)
+	{
+		
+		boolean bresult=false;
+		
+		if(fam.getChildren()!=null)
+		{
+			Individual indi_parent_1 =searchPersonBD(individuals,fam.getHusband_vo().getTagValue());
+			Individual indi_parent_2 =searchPersonBD(individuals,fam.getWife_vo().getTagValue());
+		
+			
+			if(compareDateGreaterThan(indi_parent_1,100))
+				System.out.println(indi_parent_1.getName_vo().getTagValue() + " parent too old ");
+				
+		 
+			if(compareDateGreaterThan(indi_parent_2,100))
+				System.out.println(indi_parent_2.getName_vo().getTagValue() + " parent too old ");
+		}
+		return bresult;
+	}
+	
+	private static boolean compareDateGreaterThan(Individual indi, long l_src)
+	{
+		boolean bresult=false;
+		
+		try
+		{
+		 	
+			SimpleDateFormat formater=new SimpleDateFormat("dd MMM yyyy");
+			Date today = Calendar.getInstance().getTime(); 
+			String sz_today = formater.format(today);
+			long d1=formater.parse(sz_today).getTime();
+		 
+			long d2=formater.parse(indi.getBirthDate_vo().getTagValue()).getTime();
+			long dif=Math.abs((d1-d2)/(1000*60*60*24))/365;
+			//System.out.println(Math.abs((d1-d2)/(1000*60*60*24)));
+			//System.out.println(dif);
+			
+			if(dif>=l_src) bresult=true;
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		return bresult;
+	}
+	
+	private static boolean compareDatesGreaterThan(String sz_date_1,String sz_date_2, long l_src)
+	{
+		boolean bresult=false;
+		
+		try
+		{
+		 	
+			SimpleDateFormat formater=new SimpleDateFormat("dd MMM yyyy");
+			
+			long d1=formater.parse(sz_date_1).getTime();	 
+			long d2=formater.parse(sz_date_2).getTime();
+			long dif=Math.abs((d1-d2)/(1000*60*60*24))/365;
+			
+			System.out.println(Math.abs((d1-d2)/(1000*60*60*24)));
+			System.out.println(dif);
+			
+			if(dif<=l_src) bresult=true;
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		return bresult;
+	}
 	/**
 	 * Method to check if child is born after the marriage of their parents and before their divorce.
 	 * @param indi : Child to check
