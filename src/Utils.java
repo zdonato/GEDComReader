@@ -221,7 +221,7 @@ public  class Utils {
 		{
 			Individual src_indi_child=searchPersonBD(individuals,src_fam.getChildren().get(0).getTagValue());
 			getSiblings(src_fam,searchPersonBD(individuals,src_fam.getHusband_vo().getTagValue()),src_indi_child,families,individuals);
-	 
+			bresult=true;
 		}
 		return bresult;
 	}
@@ -436,5 +436,27 @@ public  class Utils {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static String calculateAge(Individual indi)
+	{
+		long dif=0;
+		try
+		{
+			SimpleDateFormat formater=new SimpleDateFormat("dd MMM yyyy");
+			
+			Date today = Calendar.getInstance().getTime(); 
+			String sz_today = formater.format(today);
+			long d1=formater.parse(sz_today).getTime();
+		 
+			long d2=formater.parse(indi.getBirthDate_vo().getTagValue()).getTime();
+			dif=Math.abs((d1-d2)/(1000*60*60*24))/365;
+			 
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		return ""+dif;
 	}
 }

@@ -362,6 +362,9 @@ public class ProjectFileReader
 			// Check to make sure all dates are before the current date.
 			Utils.ensureIndividualsDatesBeforeCurrentDate(indi);
 			
+			//print age
+			System.out.println(indi.getName_vo().getTagValue() +"Age: "+ Utils.calculateAge(indi));
+			
 			System.out.println();
 		}
 		
@@ -449,7 +452,9 @@ public class ProjectFileReader
 			}
 
 			Utils.verifyIfParentsTooOld(fam,individuals);
-			Utils.verifyIfSiblings(fam,individuals,families);
+			if(Utils.verifyIfSiblings(fam,individuals,families))
+				System.out.println("Siblings should not marry one another");
+			
 			System.out.println();
 			System.out.println();
 		}
