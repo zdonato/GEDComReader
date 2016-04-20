@@ -459,4 +459,51 @@ public  class Utils {
 		}
 		return ""+dif;
 	}
+	
+	/**
+	 * Method to ensure that the gender is correct for each role.
+	 * Male Husband, Female wife
+	 * 
+	 * @param husband - The husband to check
+	 * @param wife - The wife to check
+	 */
+	public static void ensureGenderCorrectForRole(Individual husband, Individual wife) 
+	{
+		if (husband != null)
+		{
+			if (!husband.getSex_vo().getTagValue().equals("M"))
+			{
+				System.out.println("Husband must be a male");
+			}
+		}
+		
+		if (wife != null)
+		{
+			if (!wife.getSex_vo().getTagValue().equals("F")) 
+			{
+				System.out.println("Wife must be a female");
+			}
+		}
+	}
+	
+	/**
+	 * Method to ensure that all males in a family have the same last name.
+	 * 
+	 * @param fam - Family to check on
+	 * @param indis - Array of individuals
+	 */
+	public static void ensureSameLastNamesForMales(Family fam, ArrayList<Individual> indis)
+	{
+		String lastName = Utils.searchIndiById(indis, fam.getHusband_vo().getTagValue()).getSurn_vo().getTagValue();
+		
+		for (VO indi : fam.getChildren())
+		{
+			String nameToCheck = Utils.searchIndiById(indis, indi.getTagValue()).getSurn_vo().getTagValue();
+			
+			if (!lastName.equals(nameToCheck))
+			{
+				System.out.println("All males in the family must have the same last name");
+			}
+		}
+	}
 }

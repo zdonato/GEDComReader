@@ -457,6 +457,10 @@ public class ProjectFileReader
 			
 			System.out.println();
 			System.out.println();
+			
+			Utils.ensureGenderCorrectForRole(husband, wife);
+			
+			Utils.ensureSameLastNamesForMales(fam, individuals);
 		}
 		
 		// Ensure all ids are unique.
